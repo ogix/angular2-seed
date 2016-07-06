@@ -1,6 +1,8 @@
 var webpack = require('webpack');
 var path = require('path');
 
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var extractCSS = new ExtractTextPlugin('vendor.css');
 
 // Webpack Config
 var webpackConfig = {
@@ -15,6 +17,8 @@ var webpackConfig = {
   },
 
   plugins: [
+    extractCSS,
+    new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }), // Maps these identifiers to the jQuery package (because semantic-ui expects it to be a global variable)
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
   ],
@@ -23,10 +27,11 @@ var webpackConfig = {
     loaders: [
       // .ts files for TypeScript
       { test: /\.ts$/, loaders: ['awesome-typescript-loader', 'angular2-template-loader'] },
-      { test: /\.css$/, loaders: ['to-string-loader', 'css-loader'] },
+      { test: /\.css$/, include: path.join(__dirname, 'src', 'app'), loaders: ['to-string-loader', 'css-loader'] },
+	  { test: /\.css$/, exclude: path.join(__dirname, 'src', 'app'), loader: extractCSS.extract(['css']) },
       { test: /\.html$/, loader: 'raw-loader' },
       { test: /\.json$/, loader: 'json-loader' },
-
+      { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' },
     ]
   }
 
