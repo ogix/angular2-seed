@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ROUTER_DIRECTIVES, ActivatedRoute, Router} from '@angular/router';
-import {Github} from '../../services/github';
+import {Github} from '../shared/github';
 
 @Component({
   selector: 'repo-detail',
@@ -10,7 +10,7 @@ import {Github} from '../../services/github';
   styleUrls: ['./repo-detail.css'],
   templateUrl: './repo-detail.html'
 })
-export class RepoDetail {
+export class RepoDetail implements OnInit {
   private org:string;
   private repo:string;
   public repoDetails:any = {};
