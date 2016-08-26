@@ -28,9 +28,8 @@ var webpackConfig = {
       // .ts files for TypeScript
       { test: /\.ts$/, loaders: ['awesome-typescript-loader', 'angular2-template-loader'] },
       { test: /\.css$/, include: path.join(__dirname, 'src', 'app'), loaders: ['to-string-loader', 'css-loader'] },
-	  { test: /\.css$/, exclude: path.join(__dirname, 'src', 'app'), loader: extractCSS.extract(['css']) },
+      { test: /\.css$/, exclude: path.join(__dirname, 'src', 'app'), loader: extractCSS.extract(['css']) },
       { test: /\.html$/, loader: 'raw-loader' },
-      { test: /\.json$/, loader: 'json-loader' },
       { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' },
     ]
   }
@@ -51,7 +50,7 @@ var defaultConfig = {
 
   resolve: {
     root: [ path.join(__dirname, 'src') ],
-    extensions: ['', '.ts', '.js', '.json']
+    extensions: ['', '.ts', '.js']
   },
 
   devServer: {
@@ -66,8 +65,8 @@ var defaultConfig = {
     Buffer: 0,
     clearImmediate: 0,
     setImmediate: 0
-  },
-}
+  }
+};
 
 var webpackMerge = require('webpack-merge');
 module.exports = webpackMerge(defaultConfig, webpackConfig);
